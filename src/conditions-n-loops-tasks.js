@@ -69,8 +69,17 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.y === king.y) {
+    return true;
+  }
+  if (queen.x === king.x) {
+    return true;
+  }
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -157,13 +166,42 @@ function convertNumberToString(numberStr) {
     ',': 'point',
   };
   let result = '';
+
   for (let i = 0; i < numberStr.length; i += 1) {
-    if (numberStr[0] === 0 && numberStr[1] !== ',' && numberStr[1] !== '.') {
-      i += 1;
+    const char = numberStr[i];
+    if (
+      i === 0 &&
+      char === '0' &&
+      numberStr[i + 1] !== ',' &&
+      numberStr[i + 1] !== '.'
+    ) {
+      result += '';
+    } else {
+      switch (char) {
+        case '-':
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '.':
+        case ',':
+          result += vocab[char];
+          break;
+        default:
+          break;
+      }
+      if (i + 1 !== numberStr.length) {
+        result += ' ';
+      }
     }
-    result += vocab[numberStr[i]];
-    if (i + 1 !== numberStr.length) result += ' ';
   }
+
   return result;
 }
 
